@@ -1,6 +1,7 @@
 <?php
-session_start();          // ✅ eerst starten, dan destroyen
+session_start();
 session_destroy();
-header("Location: login.php");  // ✅ stuur naar login, niet index
+require_once 'backend/config.php';
+header("Location: $base_url/admin/login.php");
 exit;
 ?>

@@ -34,7 +34,7 @@ if (!isset($_SESSION['user_id'])) {
 
         <?php
         require_once '../backend/conn.php';
-        $query = "SELECT * FROM rides ORDER BY title ASC"; // ✅ gesorteerd op titel
+        $query = "SELECT * FROM rides ORDER BY title ASC"; 
         $statement = $conn->prepare($query);
         $statement->execute();
         $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -67,4 +67,4 @@ if (!isset($_SESSION['user_id'])) {
 
     </div>
 </body>
-</html>
+</html>zzz

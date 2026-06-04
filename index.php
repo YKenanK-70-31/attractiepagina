@@ -1,6 +1,12 @@
 <?php
 session_start();
 require_once 'admin/backend/config.php';
+require_once 'admin/backend/conn.php';
+
+$query = "SELECT * FROM rides ORDER BY title ASC"; 
+$statement = $conn->prepare($query);
+$statement->execute();
+$rides = $statement->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!doctype html>
@@ -22,10 +28,29 @@ require_once 'admin/backend/config.php';
     <?php require_once 'header.php'; ?>
     <div class="container content">
         <aside>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia modi dolore magnam! Iste libero voluptatum autem, sapiente ullam earum nostrum sed magnam vel laboriosam quibusdam, officia, esse vitae dignissimos nulla?
+            <h2>Themagebieden</h2>
+            <ul>
+                <li>Familyland</li>
+                <li>Waterland</li>
+                <li>Adventureland</li>
+            </ul>
         </aside>
         <main>
-            <!-- hier komen de attractiekaartjes -->
+            <div class="attracties">
+                <?php foreach($rides as $ride): ?>
+                    <div class="attractie"> 
+                        <img src="<?php echo $base_url; ?>/img/attracties/<?php echo $ride['img_file']; ?>" alt="<?php echo htmlspecialchars($ride['title']); ?>"/>
+                        <div class="attractie-info">
+                            <p class="themeland"><?php echo ucfirst($ride['themeland']); ?></p>
+                            <h2><?php echo htmlspecialchars($ride['title']); ?></h2>
+                            <p class="description"><?php echo htmlspecialchars($ride['description']); ?></p>
+                            <?php if($ride['min_length']): ?>
+                                <p class="length"><?php echo $ride['min_length']; ?> cm</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </main>
     </div>
 
