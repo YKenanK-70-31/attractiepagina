@@ -1,41 +1,54 @@
-<form action="../backend/ridesController.php" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="action" value="create">
+<?php
+session_start();
+require_once '../backend/config.php';
 
-    <div class="form-group">
-        <label for="title">Titel:</label>
-        <input type="text" name="title" id="title" class="form-input">
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../login.php');
+    exit;
+}
+?>
+<!doctype html>
+<html lang="nl">
+<head>
+    <title>TOETS <?php echo ucfirst($app_name); ?></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="<?php echo $base_url; ?>/css/normalize.css">
+    <link rel="stylesheet" href="<?php echo $base_url; ?>/css/main.css">
+    <link rel="icon" href="<?php echo $base_url; ?>/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+    <?php require_once '../header.php'; ?>
+    <div class="container">
+        <h3>Nieuw</h3>
+        <form action="../backend/plantenController.php" method="POST">
+            <input type="hidden" name="action" value="create">
+            <div class="form-group">
+                <label for="titel">Titel:</label>
+                <input type="text" name="titel" id="titel" required>
+            </div>
+            <div class="form-group">
+                <label for="beschrijving">Beschrijving:</label>
+                <textarea name="beschrijving" id="beschrijving" cols="30" rows="10"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="familie">Familie:</label>
+                <input type="text" name="familie" id="familie">
+            </div>
+            <div class="form-group">
+                <label for="leverancier">Leverancier:</label>
+                <select name="leverancier" id="leverancier">
+                    <option value="plantBV">plantBV</option>
+                    <option value="SuperFlower">SuperFlower</option>
+                    <option value="treeFactory">treeFactory</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="aanbieding">Aanbieding:</label>
+                <input type="checkbox" name="aanbieding" id="aanbieding" value="1">
+            </div>
+            <input type="submit" value="Opslaan">
+        </form>
     </div>
-    <div class="form-group">
-        <label for="themeland">Themagebied:</label>
-        <select name="themeland" id="themeland" class="form-input">
-            <option value=""> - kies een optie - </option>
-            <option value="familyland">Familyland</option>
-            <option value="waterland">Waterland</option>
-            <option value="adventureland">Adventureland</option>
-        </select>
-    </div>
-
-    <!-- ✅ Nieuw: min_length -->
-    <div class="form-group">
-        <label for="min_length">Minimale lengte (cm):</label>
-        <input type="number" name="min_length" id="min_length" class="form-input">
-    </div>
-
-    <!-- ✅ Nieuw: description -->
-    <div class="form-group">
-        <label for="description">Beschrijving:</label>
-        <textarea name="description" id="description" class="form-input"></textarea>
-    </div>
-
-    <div class="form-group">
-        <label for="img_file">Afbeelding:</label>
-        <input type="file" name="img_file" id="img_file" class="form-input">
-    </div>
-    <div class="form-group">
-        <label for="fast_pass">FAST PASS:</label>
-        <input type="checkbox" name="fast_pass" id="fast_pass">
-        <label for="fast_pass">Voor deze attractie is een FAST PASS nodig.</label>
-    </div>
-
-    <input type="submit" value="Attractie aanmaken">
-</form>  <!-- ✅ Sluit de form tag -->
+</body>
+</html>
